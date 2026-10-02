@@ -4,9 +4,8 @@ venv/
 
 # PyCharm / IDE settings
 .idea/
-.env.py
+.env
 # Django / Python temporary files
 __pycache__/
 *.pyc
 db.sqlite3
-.env

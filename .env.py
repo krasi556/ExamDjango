@@ -1,3 +1,0 @@
-USER="postgres",
-PASSWORD="postgres",
-
