@@ -4,7 +4,7 @@ venv/
 
 # PyCharm / IDE settings
 .idea/
-
+.env.py
 # Django / Python temporary files
 __pycache__/
 *.pyc
