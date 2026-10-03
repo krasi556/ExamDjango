@@ -1,6 +1,8 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 
+from core.validators import symbol_validator
+
 
 # Create your models here.
 
@@ -12,7 +14,10 @@ class Employee(models.Model):
         MOBILE_DEVELOPER = 'MOBILE_DEV', 'Mobile App Developer'
         GAME_DEVELOPER = 'GAME_DEV', 'Game Developer'
 
-    name = models.CharField(max_length=100)
+    first_name = models.CharField(max_length=100,
+                                  validators=[symbol_validator])
+    last_name=models.CharField(max_length=100,
+                               validators=[symbol_validator])
     profession = models.CharField(
         max_length=20,
         choices=ProfessionChoices.choices,
@@ -34,6 +39,7 @@ class Employee(models.Model):
     skills = models.ManyToManyField(
         to='Skill',
         blank=True,
+        related_name='employees'
     )
 
 

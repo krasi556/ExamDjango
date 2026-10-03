@@ -16,3 +16,4 @@ class Application(models.Model):
         max_length=20,
         choices=Employee.ProfessionChoices.choices,
         )
+
