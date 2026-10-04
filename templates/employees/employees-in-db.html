@@ -10,7 +10,7 @@
             Short Bio: {{ employee.bio|truncatewords:15 }}
             Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}
             Profession: {{ employee.get_profession_display }}
-            Rating: {{ employee.avg_rating|floatformat:1|default:'No reviews yet, probably because he is busy fixing your code' }}
+            Rating: {{ employee.avg_rating|stars_cont }}
             Photo:
             {% if employee.photo %}
                 <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">

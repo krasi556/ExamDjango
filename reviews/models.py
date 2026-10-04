@@ -6,12 +6,12 @@ from django.db import models
 
 
 class Review(models.Model):
-    class RatingChoices(models.TextChoices):
-        TERRIBLE = '1', 'Terrible'
-        BAD = '2', 'Bad'
-        OK = '3', 'Ok'
-        GOOD = '4', 'Good'
-        EXCELLENT = '5', 'Excellent'
+    class RatingChoices(models.IntegerChoices):
+        TERRIBLE = 1, 'Terrible'
+        BAD = 2, 'Bad'
+        OK = 3, 'Ok'
+        GOOD = 4, 'Good'
+        EXCELLENT = 5, 'Excellent'
 
     employee = models.ForeignKey(
         to='employees.Employee',
@@ -23,4 +23,4 @@ class Review(models.Model):
     text = models.TextField(
         validators=[MinLengthValidator(10)]
     )
-    rating = models.CharField(choices=RatingChoices.choices)
+    rating = models.SmallIntegerField(choices=RatingChoices.choices)
