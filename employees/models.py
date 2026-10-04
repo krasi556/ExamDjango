@@ -34,6 +34,7 @@ class Employee(models.Model):
     )
     bio = models.TextField()
     photo = models.ImageField(
+        upload_to='employees/',
         blank=True,
     )
     skills = models.ManyToManyField(
