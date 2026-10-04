@@ -21,8 +21,10 @@ from core import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('core.urls')),
-    path('careers/',include('careers.urls')),
-    path('employees/',include('employees.urls')),
-    path('reviews/',include('reviews.urls'))
+    path('', include('core.urls')),
+    path('careers/', include('careers.urls')),
+    path('employees/', include('employees.urls')),
+    path('reviews/', include('reviews.urls'))
 ]
+
+handler404 = 'core.views.handle_error404'
