@@ -35,6 +35,7 @@ ADDITIONAL_APPS = [
     'employees',
     'careers',
 
+
 ]
 # Application definition
 

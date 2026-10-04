@@ -6,6 +6,13 @@ from django.db import models
 
 
 class Review(models.Model):
+    class RatingChoices(models.TextChoices):
+        TERRIBLE = '1', 'Terrible'
+        BAD = '2', 'Bad'
+        OK = '3', 'Ok'
+        GOOD = '4', 'Good'
+        EXCELLENT = '5', 'Excellent'
+
     employee = models.ForeignKey(
         to='employees.Employee',
         related_name='reviews',
@@ -16,9 +23,4 @@ class Review(models.Model):
     text = models.TextField(
         validators=[MinLengthValidator(10)]
     )
-    rating = models.PositiveIntegerField(
-        validators=[
-            MinValueValidator(1),
-            MaxValueValidator(5)
-        ]
-    )
+    rating = models.CharField(choices=RatingChoices.choices)
