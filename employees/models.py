@@ -15,6 +15,8 @@ class Employee(models.Model):
         MOBILE_DEVELOPER = 'MOBILE_DEV', 'Mobile App Developer'
         GAME_DEVELOPER = 'GAME_DEV', 'Game Developer'
 
+    is_available = models.BooleanField(default=True)
+
     first_name = models.CharField(max_length=100,
                                   validators=[symbol_validator])
     last_name = models.CharField(max_length=100,

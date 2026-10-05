@@ -1,0 +1,16 @@
+{% if not review_check %}
+    <div>
+        <a href="{% url 'focused-employee' employee.id %}?hire_check=True">
+            Hire
+        </a>
+        <a href="{% url 'focused-employee' employee.id %}?review_check=True">
+            Leave a review
+        </a>
+    </div>
+{% else %}
+    <form method="post">
+        {% csrf_token %}
+        {{ form }}
+        <button>Submit</button>
+    </form>
+{% endif %}

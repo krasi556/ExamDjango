@@ -20,21 +20,39 @@ def current_employees(request):
 
 def focused_employee(request, employee_id):
     get_employee = get_object_or_404(Employee.objects.prefetch_related('skills'), id=employee_id)
-    form = ReviewForms(request.POST or None)
-    get_check = False
-    if request.GET.get('get_check'):
-        get_check = True
-    if request.method == 'POST' and form.is_valid():
-        review = form.save(commit=False)
-        review.employee = get_employee
-        review.save()
-        return redirect('core:load-main-page')
+
+    if request.method == 'POST':
+        return leave_a_review(request, get_employee)
+
+    review_check = False
+    form = ''
+    if request.GET.get('review_check'):
+        form = ReviewForms(request.POST or None)
+        review_check = True
+
+    if request.GET.get('hire_check'):
+        pass
 
     context = {
         'employee': get_employee,
         'form': form,
-        'get_check': get_check
+        'review_check': review_check
     }
 
     return render(request, 'employees/focused-employee.html', context)
 
+
+def leave_a_review(request, get_employee):
+    form = ReviewForms(request.POST)
+    if form.is_valid():
+        review = form.save(commit=False)
+        review.employee = get_employee
+        review.save()
+        return redirect('core:load-main-page')
+    context = {
+        'employee': get_employee,
+        'form': form,
+        'get_check': True
+    }
+
+    return render(request, 'employees/focused-employee.html', context)

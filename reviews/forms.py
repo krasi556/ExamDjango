@@ -4,7 +4,7 @@ from reviews.models import Review
 
 
 class ReviewForms(forms.ModelForm):
-    author = forms.CharField(max_length=100)
+    author = forms.CharField(max_length=100,required=False)
 
     class Meta:
         model = Review
