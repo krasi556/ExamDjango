@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% load custom_tags %}
 {% block title %}
     Welcome to our page with real IT agents ! {# that was a lie  #}
@@ -7,17 +8,11 @@
     {% for employee in employees %}
         <div>
             Name: {{ employee.first_name }} {{ employee.last_name }}
-            Short Bio: {{ employee.bio|truncatewords:15 }}
             Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}
             Profession: {{ employee.get_profession_display }}
             Rating: {{ employee.avg_rating|stars_cont }}
-            Photo:
-            {% if employee.photo %}
-                <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
-            {% else %}
-                <p>Too shy to show itself</p>
-            {% endif %}
-            <a href="">
+            Photo: <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
+            <a href="{% url 'focused-employee' employee.id %}">
                 <button> Details</button>
             </a>
         </div>

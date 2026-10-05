@@ -1,5 +1,6 @@
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.templatetags.static import static
 
 from core.validators import symbol_validator
 
@@ -35,8 +36,10 @@ class Employee(models.Model):
     bio = models.TextField()
     photo = models.ImageField(
         upload_to='employees/',
+        default='img-def-not-ai.png',
         blank=True,
     )
+
     skills = models.ManyToManyField(
         to='Skill',
         blank=True,

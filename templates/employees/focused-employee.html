@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% load custom_tags %}
+{% block content %}
+    <div>
+        Name: {{ employee.first_name }} {{ employee.last_name }}
+        Short Bio: {{ employee.bio|truncatewords:15 }}
+        Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}
+        years of experience: {{ employee.years_of_experience }}
+        Profession: {{ employee.get_profession_display }}
+        Rating: {{ employee.avg_rating|stars_cont }}
+        Photo: <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
+    </div>
+    <div>
+        <a>
+            <button>
+                Hire
+            </button>
+        </a>
+        <a methods="GET" href="{% url 'focused-employee' employee.id %}">
+            <button>
+                Leave a review
+            </button>
+        </a>
+    </div>
+{% endblock %}
