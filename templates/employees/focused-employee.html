@@ -10,16 +10,24 @@
         Rating: {{ employee.avg_rating|stars_cont }}
         Photo: <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
     </div>
-    <div>
-        <a>
-            <button>
-                Hire
-            </button>
-        </a>
-        <a methods="GET" href="{% url 'focused-employee' employee.id %}">
-            <button>
-                Leave a review
-            </button>
-        </a>
-    </div>
+    {% if not get_check %}
+        <div>
+            <a>
+                <button>
+                    Hire
+                </button>
+            </a>
+            <a href="{% url 'focused-employee' employee.id %}?get_check=True">
+                <button>
+                    Leave a review
+                </button>
+            </a>
+        </div>
+    {% else %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form }}
+            <button>Submit</button>
+        </form>
+    {% endif %}
 {% endblock %}

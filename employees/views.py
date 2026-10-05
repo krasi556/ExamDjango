@@ -1,7 +1,8 @@
 from django.db.models import Avg, F
-from django.shortcuts import render, get_list_or_404, get_object_or_404
+from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 
 from employees.models import Employee
+from reviews.forms import ReviewForms
 
 
 # Create your views here.
@@ -19,10 +20,21 @@ def current_employees(request):
 
 def focused_employee(request, employee_id):
     get_employee = get_object_or_404(Employee.objects.prefetch_related('skills'), id=employee_id)
-    if request.method == 'GET':
-        pass
+    form = ReviewForms(request.POST or None)
+    get_check = False
+    if request.GET.get('get_check'):
+        get_check = True
+    if request.method == 'POST' and form.is_valid():
+        review = form.save(commit=False)
+        review.employee = get_employee
+        review.save()
+        return redirect('core:load-main-page')
+
     context = {
-        'employee': get_employee
+        'employee': get_employee,
+        'form': form,
+        'get_check': get_check
     }
 
     return render(request, 'employees/focused-employee.html', context)
+
