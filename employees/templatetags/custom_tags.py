@@ -1,3 +1,5 @@
+import random
+
 from django import template
 from django.utils.safestring import mark_safe
 
@@ -23,7 +25,7 @@ def color_by_hourly_rate(rate):
 
 @register.filter
 def stars_cont(value):
-    if value is not None and not isinstance(value,str):
+    if value is not None and not isinstance(value, str):
         number = round(value)
         return '★' * number + ('☆' * (5 - number))
     return 'No rating yet, probably because he is busy fixing your code'

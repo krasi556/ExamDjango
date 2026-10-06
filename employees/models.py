@@ -1,8 +1,11 @@
+import random
+
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 from django.templatetags.static import static
 
 from core.validators import symbol_validator
+from employees.additional import excuses
 
 
 # Create your models here.
@@ -16,6 +19,7 @@ class Employee(models.Model):
         GAME_DEVELOPER = 'GAME_DEV', 'Game Developer'
 
     is_available = models.BooleanField(default=True)
+    current_task = models.CharField(max_length=200, null=True, blank=True)
 
     first_name = models.CharField(max_length=100,
                                   validators=[symbol_validator])
@@ -51,6 +55,10 @@ class Employee(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
+    def save(self, *args, **kwargs):
+        if not self.is_available:
+            self.current_task = random.choice(excuses)
+        super().save(*args,**kwargs)
 
 class Skill(models.Model):
     name = models.CharField(max_length=100

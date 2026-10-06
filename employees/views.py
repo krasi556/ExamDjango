@@ -31,7 +31,7 @@ def focused_employee(request, employee_id):
         review_check = True
 
     if request.GET.get('hire_check'):
-        pass
+        return hire_employee(request, get_employee)
 
     context = {
         'employee': get_employee,
@@ -56,3 +56,9 @@ def leave_a_review(request, get_employee):
     }
 
     return render(request, 'employees/focused-employee.html', context)
+
+
+def hire_employee(request, get_employee):
+    get_employee.is_available = False
+    get_employee.save()
+    return redirect('current-employees')

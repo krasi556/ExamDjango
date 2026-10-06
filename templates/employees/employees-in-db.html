@@ -11,6 +11,7 @@
             Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}
             Profession: {{ employee.get_profession_display }}
             Rating: {{ employee.avg_rating|stars_cont }}
+            Availability: {{ employee }} {# fixing #}
             Photo: <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
             <a href="{% url 'focused-employee' employee.id %}">
                 <button> Details</button>

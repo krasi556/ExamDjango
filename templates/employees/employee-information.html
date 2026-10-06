@@ -1,8 +1,10 @@
 {% if not review_check %}
     <div>
+        {% if employee.is_available %}
         <a href="{% url 'focused-employee' employee.id %}?hire_check=True">
             Hire
         </a>
+            {% endif %}
         <a href="{% url 'focused-employee' employee.id %}?review_check=True">
             Leave a review
         </a>
