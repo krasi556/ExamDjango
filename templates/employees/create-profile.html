@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form }}
+        <button>Create</button>
+    </form>
+    <a href="{% url 'employees:current-employees'%}">Cancel</a>
+{% endblock %}

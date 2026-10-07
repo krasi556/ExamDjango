@@ -1,18 +1,16 @@
 {% if not review_check %}
     <div>
         {% if employee.is_available %}
-        <a href="{% url 'focused-employee' employee.id %}?hire_check=True">
-            Hire
-        </a>
-            {% endif %}
-        <a href="{% url 'focused-employee' employee.id %}?review_check=True">
+            <a href="{% url 'employees:focused-employee' employee.id %}?hire_check=True">
+                Hire
+            </a>
+        {% endif %}
+        <a href="{% url 'employees:focused-employee' employee.id %}?review_check=True">
             Leave a review
         </a>
+        <a href="{% url 'employees:edit' employee.id %}">Edit employee</a>
+        <a href="{% url 'employees:delete' employee.id %}">Delete Employee</a>
     </div>
 {% else %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form }}
-        <button>Submit</button>
-    </form>
+    {% include 'reviews/leave-a-review.html' %}
 {% endif %}

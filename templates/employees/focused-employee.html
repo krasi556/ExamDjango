@@ -10,5 +10,5 @@
         Rating: {{ employee.avg_rating|stars_cont }}
         Photo: <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
     </div>
-    {% include 'employees/employee-information.html' %}
+    {% include 'employees/employee-information.html' %} {# this is the button area on bottom  #}
 {% endblock %}

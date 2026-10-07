@@ -1,0 +1,17 @@
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    align-items: center;
+    justify-content: center;
+}
+.modal:target { display: flex; }
+
+.modal-box {
+    background: white;
+    padding: 12px 18px;
+    border-radius: 6px;
+    font-size: 14px;
+    text-align: center;
+}

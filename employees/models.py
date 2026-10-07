@@ -56,9 +56,16 @@ class Employee(models.Model):
         return f"{self.first_name} {self.last_name}"
 
     def save(self, *args, **kwargs):
+        if not self.photo:
+            self.photo = 'img-def-not-ai.png'
+
         if not self.is_available:
-            self.current_task = random.choice(excuses)
-        super().save(*args,**kwargs)
+            if not self.current_task or self.current_task == 'Currently available':
+                self.current_task = random.choice(excuses)
+        else:
+            self.current_task = 'Currently available'
+        super().save(*args, **kwargs)
+
 
 class Skill(models.Model):
     name = models.CharField(max_length=100

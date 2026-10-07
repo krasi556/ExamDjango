@@ -1,4 +1,6 @@
 {% block content %}
     <a href="{% url 'core:load-main-page' %}">Home</a>
-    <a href="{% url 'current-employees' %}">Employees</a>
+    <a href="{% url 'employees:current-employees' %}">Employees</a>
+    <a href="{% url 'employees:create-profile' %}">Join us</a>
+
 {% endblock %}

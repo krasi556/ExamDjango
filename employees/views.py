@@ -1,6 +1,7 @@
 from django.db.models import Avg, F
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 
+from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee
 from employees.models import Employee
 from reviews.forms import ReviewForms
 
@@ -61,4 +62,49 @@ def leave_a_review(request, get_employee):
 def hire_employee(request, get_employee):
     get_employee.is_available = False
     get_employee.save()
-    return redirect('current-employees')
+    return redirect('employees:current-employees')
+
+
+def create_profile(request):
+    form = CreateEmployee()
+    if request.method == 'POST':
+        form = CreateEmployee(request.POST, request.FILES or None)
+        if form.is_valid():
+            form.save()
+            return redirect('core:load-main-page')
+    if request.method == 'GET':
+        pass
+    context = {
+        'form': form
+    }
+
+    return render(request, 'employees/create-profile.html', context)
+
+
+def edit_employee(request, employee_id):
+    get_employee = get_object_or_404(Employee, id=employee_id)
+    if request.method == 'POST':
+        form = EditEmployee(request.POST, request.FILES, instance=get_employee)
+        if form.is_valid():
+            form.save()
+            return redirect('core:load-main-page')
+    form = EditEmployee(instance=get_employee)
+    context = {
+        'employee': get_employee,
+        'form': form
+    }
+    return render(request, 'employees/edit-employee.html', context)
+
+
+def delete_employee(request, employee_id):
+    get_employee = get_object_or_404(Employee, id=employee_id)
+    form = DeleteEmployee(instance=get_employee)
+    if request.method == 'POST':
+        get_employee.delete()
+        return redirect('core:load-main-page')
+
+    context = {
+        'employee': get_employee,
+        'form': form
+    }
+    return render(request, 'employees/delete-employee.html', context)
