@@ -1,17 +1,49 @@
-.modal {
+.confirm-overlay {
     display: none;
     position: fixed;
     inset: 0;
-    background: rgba(0, 0, 0, 0.4);
+    z-index: 2000;
+    background: rgba(0, 0, 0, 0.5);
     align-items: center;
     justify-content: center;
 }
-.modal:target { display: flex; }
+.confirm-overlay:target { display: flex; }
 
-.modal-box {
+.confirm-box {
     background: white;
-    padding: 12px 18px;
-    border-radius: 6px;
-    font-size: 14px;
+    padding: 1.5rem;
+    border-radius: 8px;
+    max-width: 380px;
     text-align: center;
+}
+
+form div { margin-bottom: 1rem; }
+form .helptext { display: block; font-size: 0.85rem; color: #6c757d; }
+form .errorlist { color: #dc3545; list-style: none; padding: 0; margin: 0 0 0.25rem; }
+
+.employee-photo {
+    max-width: 100%;
+    max-height: 320px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.custom-container {
+    width: 100%;
+    max-width: 1600px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.custom-nav-link {
+    text-decoration: none;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #212529;
+    transition: color 0.2s ease-in-out;
+    padding: 0.5rem 1rem;
+}
+
+.custom-nav-link:hover {
+    color: #0d6efd;
 }

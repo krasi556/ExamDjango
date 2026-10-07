@@ -1,6 +1,11 @@
-{% block content %}
-    <a href="{% url 'core:load-main-page' %}">Home</a>
-    <a href="{% url 'employees:current-employees' %}">Employees</a>
-    <a href="{% url 'employees:create-profile' %}">Join us</a>
-
-{% endblock %}
+<nav class="navbar navbar-expand-lg">
+    <div class="container">
+        <a class="navbar-brand custom-nav-link ps-0"  href="{% url 'core:load-main-page' %}">Hire an IT 'Expert'</a>
+            <ul class="navbar-nav ms-auto">
+                <li class="nav-item"><a class="custom-nav-link" href="{% url 'core:load-main-page' %}">Home</a></li>
+                <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:current-employees' %}">Employees</a></li>
+                <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:create-profile' %}">Join us</a></li>
+                <li class="nav-item"><a class="custom-nav-link" href="{% url 'reviews:leave-review' %}">Leave review</a></li>
+            </ul>
+    </div>
+</nav>

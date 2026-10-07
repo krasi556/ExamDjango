@@ -5,17 +5,30 @@
     Welcome to our page with real IT agents ! {# that was a lie  #}
 {% endblock %}
 {% block content %}
-    {% for employee in employees %}
-        <div>
-            Name: {{ employee.first_name }} {{ employee.last_name }}
-            Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}
-            Profession: {{ employee.get_profession_display }}
-            Rating: {{ employee.avg_rating|stars_cont }}
-            Availability: {{ employee.current_task }} {# fixing #}
-            Photo: <img src="{{ employee.photo.url }}" alt="{{ employee.first_name }} {{ employee.last_name }}">
-            <a href="{% url 'employees:focused-employee' employee.id %}">
-                <button> Details</button>
-            </a>
-        </div>
-    {% endfor %}
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        {% for employee in employees %}
+            <div class="col">
+                <a href="{% url 'employees:focused-employee' employee.id %}" class="text-decoration-none text-reset">
+                    <div class="card h-100 shadow-sm text-center d-flex flex-column justify-content-between">
+                        <div class="pt-4 d-flex justify-content-center align-items-center">
+                            <img src="{{ employee.photo.url }}"
+                                 class="rounded shadow-sm"
+                                 style="width: 120px; height: 120px; object-fit: cover;"
+                                 alt="{{ employee }}">
+                        </div>
+                        <div class="card-body d-flex flex-column justify-content-center align-items-center py-3">
+                            <h5 class="card-title mb-2">{{ employee }}</h5>
+                            <p class="card-text mb-1 fw-semibold text-secondary">{{ employee.get_profession_display }}</p>
+                            <p class="card-text mb-1">Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}</p>
+                            <p class="card-text mb-1">Rating: {{ employee.avg_rating|stars_cont }}</p>
+                            <p class="card-text text-muted small mt-1 mb-1">{{ employee.current_task }}</p>
+                        </div>
+
+                        <div class="card-footer bg-transparent border-top-0 pb-3 pt-0">
+                        </div>
+                    </div>
+                </a>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
