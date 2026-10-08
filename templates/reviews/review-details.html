@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="row row-cols-1 row-cols-md-3 g-4" style="margin: 5rem 0 0 3rem">
+        <div class="col">
+            <h5>Leave review for </h5>
+            <h4>{{ employee.first_name }}{{ employee.last_name }}</h4>
+            <form method="POST" class="review-form flex-column gap-3">
+                {% csrf_token %}
+                {{ form }}
+                <button class=" btn btn-primary" >Submit</button>
+                <a class="btn btn-outline-secondary px-6 mx-4" href="{% url 'reviews:show-employees-reviews' %}">Go back</a>
+            </form>
+        </div>
+    </div>
+{% endblock %}
