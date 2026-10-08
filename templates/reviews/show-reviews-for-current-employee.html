@@ -38,10 +38,10 @@
                         <div class="d-flex gap-2">
                             {# SENDS TO EDIT-review #}
                             <a class="btn btn-sm btn-outline-secondary flex-fill"
-                               href="{% url 'reviews:base-review' review.id %}?edit=1">Edit</a>
+                               href="{% url 'reviews:edit-review' review.id %}">Edit</a>
 
                             <a class="btn btn-sm btn-outline-danger flex-fill"
-                               href="{% url 'reviews:base-review' review.id %}?delete=1">Delete</a>
+                               href="{% url 'reviews:delete-review' review.id %}">Delete</a>
                         </div>
                     </details>
                 </div>

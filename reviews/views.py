@@ -55,17 +55,10 @@ def current_employee_reviews(request, employee_id):
     return render(request, 'reviews/show-reviews-for-current-employee.html', context)
 
 
-def base_review(request, review_id):
-    get_review = get_object_or_404(Review.objects.prefetch_related('employee'), id=review_id)
-    if request.GET.get('edit'):
-        return edit_review(request, get_review)
-    else:
-        return delete_review(request, get_review)
-
-
-def edit_review(request, review):
+def edit_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
     form = EditReview(request.POST or None, instance=review)
-    if form.is_valid():
+    if request.method == 'POST' and form.is_valid():
         form.save()
         return redirect('employees:focused-employee', employee_id=review.employee_id)
     context = {
@@ -76,9 +69,10 @@ def edit_review(request, review):
     return render(request, 'reviews/edit-review.html', context)
 
 
-def delete_review(request, review):
+def delete_review(request, review_id):
+    review = get_object_or_404(Review, id=review_id)
     form = DeleteReview(request.POST or None, instance=review)
-    if form.is_valid():
+    if form.is_valid() and form.is_valid():
         review.delete()
         return redirect('reviews:current-employee-reviews', review.employee_id)
     context = {
