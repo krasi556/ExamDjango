@@ -14,5 +14,6 @@ urlpatterns = [
         path('delete/',views.delete_employee,name='delete')
 
     ])),
+    path('join-us/done/',views.new_job,name='new-job')
 
 ]

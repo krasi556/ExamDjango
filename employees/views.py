@@ -74,12 +74,16 @@ def create_profile(request):
         form = CreateEmployee(request.POST, request.FILES or None)
         if form.is_valid():
             form.save()
-            return render(request,'employees/redirect-to-new-job.html')
+            return redirect('employees:new-job')
     context = {
         'form': form
     }
 
     return render(request, 'employees/create-profile.html', context)
+
+
+def new_job(request):
+    return render(request, 'employees/redirect-to-new-job.html')
 
 
 def edit_employee(request, employee_id):
