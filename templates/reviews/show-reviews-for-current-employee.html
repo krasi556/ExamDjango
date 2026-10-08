@@ -1,0 +1,51 @@
+{% extends 'base.html' %}
+{% load custom_filters %}
+{% block content %}
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-center gap-4 mb-4">
+            <div class="d-flex align-items-center gap-4">
+                <img src="{{ employee.photo.url }}"
+                     alt="{{ employee.first_name }} {{ employee.last_name }}"
+                     class="rounded-circle object-fit-cover shadow-sm flex-shrink-0"
+                     style="width: 120px; height: 120px;">
+                <div style="margin-top: 1rem">
+                    <h4 class="mb-1">{{ employee.first_name }} {{ employee.last_name }}</h4>
+                    <p class="text-muted mb-0 py-2">
+                    <p>Amount reviews
+                        <strong>
+                            {{ reviews|reviews_count|default:'Nothing yet' }}
+                        </strong>
+                    </p>
+                </div>
+            </div>
+            <div class="text-end">
+                <h4>Rating: </h4>
+                <p>{{ employee.avg_rating|amount_stars|default:'None yet' }}</p>
+            </div>
+        </div>
+        <div class="row row-cols-1 row-cols-md-3 g-4 align-items-start">
+            {% for review in reviews %}
+                <div class="col">
+                    <details class="card shadow-sm">
+                        <summary class="card-body d-flex justify-content-between align-items-center">
+                            <strong>{{ review.author }}</strong>
+                            <span class="badge text-bg-secondary">Rating: {{ review.rating|amount_stars|default:'None yet' }}</span>
+                        </summary>
+                        <div class="card-body">
+                            <p>{{ review.text }}</p>
+
+                        </div>
+                        <div class="d-flex gap-2">
+                            {# SENDS TO EDIT-review #}
+                            <a class="btn btn-sm btn-outline-secondary flex-fill"
+                               href="{% url 'reviews:base-review' review.id %}?edit=1">Edit</a>
+
+                            <a class="btn btn-sm btn-outline-danger flex-fill"
+                               href="{% url 'reviews:base-review' review.id %}?delete=1">Delete</a>
+                        </div>
+                    </details>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

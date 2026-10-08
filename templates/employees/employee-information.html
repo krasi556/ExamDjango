@@ -1,5 +1,5 @@
 {% if not review_check %}
-    <div class="d-flex gap-2 py-2">
+    <div class="d-flex gap-4 py-3">
         {% if employee.is_available %}
             <a class="btn btn-success" href="{% url 'employees:focused-employee' employee.id %}?hire_check=True">
                 Hire
@@ -9,8 +9,12 @@
             Leave a review
         </a>
         <a class="btn btn-outline-secondary" href="{% url 'employees:edit' employee.id %}">Edit employee</a>
+        <a class="btn btn-outline-secondary" href="{% url 'reviews:current-employee-reviews' employee.id %}">Check
+            reviews</a>
         <a class="btn btn-danger ms-auto me-3 py-2" href="{% url 'employees:delete' employee.id %}">Delete Employee</a>
     </div>
 {% else %}
     {% include 'reviews/leave-a-review.html' %}
 {% endif %}
+
+{# THIS IS THE BUTTON FIELD IN THE FOCUSED EMPLOYEE TAB !!!  #}

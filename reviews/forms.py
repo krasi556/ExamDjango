@@ -40,7 +40,11 @@ class CreateReview(ReviewForms):
 
 
 class DeleteReview(ReviewForms):
-    pass
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        for field in self.fields.values():
+            field.disabled = True
+
 
 
 class EditReview(ReviewForms):
