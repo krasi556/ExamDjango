@@ -1,13 +1,20 @@
 {% extends 'base.html' %}
 {% block content %}
-
-    <form method="POST">
-        {% csrf_token %}
-        {{ form }}
-
-        <a href="#confirm-delete">Delete</a>
-
-        {% include 'employees/pop-up-confirmation.html' %}
-    </form>
-    <a href="{% url 'employees:focused-employee' employee.id %}">Cancel</a>
+    <div class="card shadow-sm mx-auto mt-2" style="width: 55%">
+        <div class="card-header px-4 py-3">
+            <h4 class="mb-0">Delete employee</h4>
+        </div>
+        <div class="card-body pt-3 ps-5 pe-3 pb-0">
+            <form method="POST" class="empty-form">
+                {% csrf_token %}
+                {{ form }}
+                {% include 'employees/pop-up-confirmation.html' %}
+            </form>
+            <div class="d-flex gap-4 mt-4 pb-3">
+                <a class="btn btn-danger me-3 py-2" href="#confirm-delete">Delete</a>
+                <a class="btn btn-outline-secondary me-3 py-2"
+                   href="{% url 'employees:focused-employee' employee.id %}">Cancel</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}
