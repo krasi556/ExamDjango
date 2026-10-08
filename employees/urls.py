@@ -14,6 +14,9 @@ urlpatterns = [
         path('delete/',views.delete_employee,name='delete')
 
     ])),
-    path('join-us/done/',views.new_job,name='new-job')
+    path('join-us/',include([
+        path('done/',views.new_job,name='new-job'),
+        path('wait/',views.you_would_miss_out,name='you-would-miss-out')
+    ])),
 
 ]

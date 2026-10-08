@@ -1,15 +1,22 @@
- <div class="card shadow border-0 mx-auto mt-5 text-center" style="max-width: 420px;">
+{% extends 'base.html' %}
+{% block title %}Are you sure?{% endblock %}
+{% block content %}
+    <div class="miss-out-card card border-0 shadow-lg mx-auto mt-5 text-center overflow-hidden">
+        <div class="miss-out-top"></div>
         <div class="card-body p-4 p-md-5">
-            <div class="display-4 mb-3">🔧</div>
-            <h4 class="mb-3">Are you sure?</h4>
-            <p class="text-muted mb-4">
-                There are plenty of plumber jobs out there, the wait might be long....
+            <h3 class="fw-bold mb-3">Are you sure?</h3>
+            <p class="text-muted mb-4 fs-5">
+                There are plenty of plumber jobs out there,<br>
+                the wait might be long....
             </p>
-            <div class="d-flex justify-content-center gap-3">
-                <a class="btn btn-outline-secondary px-4" href="{% url 'core:load-main-page' %}">Home</a>
-                <a class="btn btn-primary px-4" href="https://www.jobs.bg">
+            <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
+                <a class="btn btn-outline-secondary btn-lg px-4" href="{% url 'core:load-main-page' %}">
+                    Home
+                </a>
+                <a class="btn btn-primary btn-lg px-4" href="https://www.jobs.bg/front_job_search.php?subm=1&keywords%5B%5D=%D0%BA%D0%B0%D1%82%D0%B0%D0%B4%D0%B6%D0%B8%D1%8F">
                     Check it out
                 </a>
             </div>
         </div>
     </div>
+{% endblock %}

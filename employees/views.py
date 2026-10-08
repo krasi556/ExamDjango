@@ -85,6 +85,8 @@ def create_profile(request):
 def new_job(request):
     return render(request, 'employees/redirect-to-new-job.html')
 
+def you_would_miss_out(request):
+    return render(request,'employees/you-miss-out.html')
 
 def edit_employee(request, employee_id):
     get_employee = get_object_or_404(Employee, id=employee_id)
