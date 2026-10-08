@@ -1,5 +1,4 @@
 from django.db.models import Avg
-from django.db.transaction import commit
 from django.shortcuts import render, get_object_or_404, redirect
 
 from employees.forms import CreateEmployee, EditEmployee
@@ -43,10 +42,6 @@ def current_employee_reviews(request, employee_id):
         .annotate(avg_rating=Avg('reviews__rating'))
         .prefetch_related('reviews'),
         id=employee_id)
-    if request.method == 'POST':
-        form = ReviewForms(request.POST)
-        pass
-
     context = {
         'employee': get_employee,
         'reviews': get_employee.reviews.all()
@@ -72,7 +67,7 @@ def edit_review(request, review_id):
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
     form = DeleteReview(request.POST or None, instance=review)
-    if form.is_valid() and form.is_valid():
+    if request.method == 'POST' and form.is_valid():
         review.delete()
         return redirect('reviews:current-employee-reviews', review.employee_id)
     context = {
