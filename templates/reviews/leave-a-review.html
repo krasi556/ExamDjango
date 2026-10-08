@@ -1,6 +1,9 @@
-<form method="post">
+<div class="w-50 py-2">
+    <h5 class="mb-3">Leave a review</h5>
+    <form method="post" class="review-form w-50">
         {% csrf_token %}
         {{ form }}
-        <button>Submit</button>
+        <button class="btn btn-primary">Submit</button>
+        <a class="btn btn-outline-secondary" href="{% url 'employees:focused-employee' employee.id %}">Cancel</a>
     </form>
-    <a href="{% url 'employees:focused-employee' employee.id %}">Cancel</a>
+</div>

@@ -20,7 +20,10 @@ def current_employees(request):
 
 
 def focused_employee(request, employee_id):
-    get_employee = get_object_or_404(Employee.objects.prefetch_related('skills'), id=employee_id)
+    get_employee = get_object_or_404(Employee.objects
+                                     .annotate(avg_rating=Avg('reviews__rating'))
+                                     .prefetch_related('skills')
+                                     , id=employee_id)
 
     if request.method == 'POST':
         return leave_a_review(request, get_employee)
@@ -49,7 +52,7 @@ def leave_a_review(request, get_employee):
         review = form.save(commit=False)
         review.employee = get_employee
         review.save()
-        return redirect('core:load-main-page')
+        return redirect('employees:current-employees')
     context = {
         'employee': get_employee,
         'form': form,

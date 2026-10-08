@@ -1,6 +1,8 @@
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
 from django.db import models
 
+from reviews.additional import scam_messages
+
 
 # Create your models here.
 
@@ -24,3 +26,8 @@ class Review(models.Model):
         validators=[MinLengthValidator(10)]
     )
     rating = models.SmallIntegerField(choices=RatingChoices.choices)
+
+    def save(self, *args, **kwargs):
+        if not self.id:
+            self.text = scam_messages(self.rating, self.text)
+        super().save(*args, **kwargs)

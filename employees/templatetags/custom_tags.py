@@ -23,9 +23,19 @@ def color_by_hourly_rate(rate):
     return mark_safe(f'<span style="color: {color}">{rate}</span>')
 
 
+ratings = {
+    1: "Works on my machine, nowhere else",
+    2: "Copy-pasted from Stack Overflow",
+    3: "Almost as good as AI",
+    4: "Suspiciously good, is it AI?",
+    5: "Better than AI (don't tell the AI)",
+}
+
+
 @register.filter
 def stars_cont(value):
     if value is not None and not isinstance(value, str):
-        number = round(value)
-        return '★' * number + ('☆' * (5 - number))
+        rounded_number = round(value)
+        number = max(1, min(5, rounded_number))
+        return ratings[number]
     return 'No rating yet, probably because he is busy fixing your code'

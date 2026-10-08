@@ -1,15 +1,15 @@
 {% if not review_check %}
-    <div>
+    <div class="d-flex gap-2 py-2">
         {% if employee.is_available %}
-            <a href="{% url 'employees:focused-employee' employee.id %}?hire_check=True">
+            <a class="btn btn-success" href="{% url 'employees:focused-employee' employee.id %}?hire_check=True">
                 Hire
             </a>
         {% endif %}
-        <a href="{% url 'employees:focused-employee' employee.id %}?review_check=True">
+        <a class="btn btn-outline-primary" href="{% url 'employees:focused-employee' employee.id %}?review_check=True">
             Leave a review
         </a>
-        <a href="{% url 'employees:edit' employee.id %}">Edit employee</a>
-        <a href="{% url 'employees:delete' employee.id %}">Delete Employee</a>
+        <a class="btn btn-outline-secondary" href="{% url 'employees:edit' employee.id %}">Edit employee</a>
+        <a class="btn btn-danger ms-auto me-3 py-2" href="{% url 'employees:delete' employee.id %}">Delete Employee</a>
     </div>
 {% else %}
     {% include 'reviews/leave-a-review.html' %}

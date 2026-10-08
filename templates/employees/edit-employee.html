@@ -1,9 +1,18 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button>Edit</button>
-    </form>
-    <a href="{% url 'employees:focused-employee' employee.id %}">Cancel</a>
+    <div class="card shadow-sm  mx-auto mt-2" style="width: 55%">
+        <div class="card-header px-4 py-3">
+            <h4 class="mb-0">Edit employee</h4>
+        </div>
+        <div class="card-body pt-3 ps-5 pe-3 pb-0">
+            <form method="POST" enctype="multipart/form-data" class="employee-form flex-column gap-3">
+                {% csrf_token %}
+                {{ form }}
+                <div class="d-flex gap-4 mt-4">
+                    <button class="btn btn-primary">Edit</button>
+                    <a class="btn btn-outline-secondary" href="{% url 'employees:focused-employee' employee.id %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

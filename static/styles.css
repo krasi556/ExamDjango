@@ -47,3 +47,18 @@ form .errorlist { color: #dc3545; list-style: none; padding: 0; margin: 0 0 0.25
 .custom-nav-link:hover {
     color: #0d6efd;
 }
+
+.review-form input,
+.review-form select,
+.review-form textarea {
+    display: block;
+    width: 100%;
+    padding: 0.375rem 0.75rem;
+    border: 1px solid #ced4da;
+    border-radius: 0.375rem;
+    font-size: 1rem;
+}
+
+.review-form textarea {
+    resize: both;
+}
