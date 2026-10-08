@@ -1,9 +1,19 @@
 {% extends 'base.html' %}
 {% block content %}
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form }}
-        <button>Create</button>
-    </form>
-    <a href="{% url 'employees:current-employees'%}">Cancel</a>
+    <div class="card shadow-sm  mx-auto mt-2" style="width: 55%">
+        <div class="card-header px-4 py-3">
+            <h4 class="mb-0">Create Employee</h4>
+                <p style="font-size: 2px; line-height: 1; margin-left: 15rem;">We require more souls for the AI overloads</p>
+        </div>
+        <div class="card-body pt-3 ps-5 pe-3 pb-0">
+            <form method="post" enctype="multipart/form-data" class="employee-form flex-column gap-3">
+                {% csrf_token %}
+                {{ form }}
+                <div class="d-flex gap-4 mt-4">
+                    <button class="btn btn-primary">Create</button>
+                    <a class="btn btn-outline-secondaryz" href="{% url 'employees:current-employees' %}">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
 {% endblock %}

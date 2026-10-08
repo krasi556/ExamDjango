@@ -90,7 +90,7 @@ def edit_employee(request, employee_id):
         form = EditEmployee(request.POST, request.FILES, instance=get_employee)
         if form.is_valid():
             form.save()
-            return redirect('core:load-main-page')
+            return redirect('employees:current-employees')
     form = EditEmployee(instance=get_employee)
     context = {
         'employee': get_employee,
