@@ -74,9 +74,7 @@ def create_profile(request):
         form = CreateEmployee(request.POST, request.FILES or None)
         if form.is_valid():
             form.save()
-            return redirect('core:load-main-page')
-    if request.method == 'GET':
-        pass
+            return render(request,'employees/redirect-to-new-job.html')
     context = {
         'form': form
     }

@@ -11,7 +11,8 @@
                 <div style="margin-top: 1rem">
                     <h4 class="mb-1">{{ employee.first_name }} {{ employee.last_name }}</h4>
                     <p class="text-muted mb-0 py-2">
-                    <p>Amount reviews
+                    <p>
+                        Amount reviews
                         <strong>
                             {{ reviews|reviews_count|default:'Nothing yet' }}
                         </strong>
@@ -30,10 +31,12 @@
                         <summary class="card-body d-flex justify-content-between align-items-center">
                             <strong>{{ review.author }}</strong>
                             <span class="badge text-bg-secondary">Rating: {{ review.rating|amount_stars|default:'None yet' }}</span>
-                        </summary>
-                        <div class="card-body">
-                            <p>{{ review.text }}</p>
 
+                        </summary>
+
+                        <div class="card-body">
+                            <p> {{ review.created_at|date:'d.m.Y' }}</p>
+                            <p>{{ review.text|truncatewords:15 }}</p>
                         </div>
                         <div class="d-flex gap-2">
                             {# SENDS TO EDIT-review #}
