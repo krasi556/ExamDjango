@@ -12,6 +12,7 @@ class EmployeeBase(forms.ModelForm):
             'bio': forms.TextInput(attrs={
                 'placeholder': 'Short bio about yourself',
             }),
+            'skills': forms.CheckboxSelectMultiple()
         }
         labels = {
             'bio': 'Biography'
@@ -37,13 +38,34 @@ class CreateEmployee(EmployeeBase):
     pass
 
 
-class BaseSkill(Skill):
-    pass
+class BaseSkill(forms.ModelForm):
+    class Meta:
+        model = Skill
+        fields = ['name']
 
 
 class SkillCreate(BaseSkill):
+    class Meta(BaseSkill.Meta):
+        error_messages = {
+            'name': {
+                'unique': 'This skill already exists, our AI invented it first '
+            }
+        }
+
+
+class DeleteSkill(BaseSkill):
     pass
 
 
-class DeleteSkill(SkillCreate):
+class EditSkill(BaseSkill):
     pass
+
+
+class SearchForm(forms.Form):
+    search_field = forms.CharField(
+        max_length=100,
+        required=False,
+        widget=forms.TextInput(attrs={
+            'placeholder': 'Give it a try'
+        })
+    )

@@ -1,8 +1,10 @@
+from types import NoneType
+
 from django.db.models import Avg, F
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 
-from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee
-from employees.models import Employee
+from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee, SearchForm, SkillCreate
+from employees.models import Employee, Skill
 from reviews.forms import ReviewForms
 
 
@@ -85,8 +87,10 @@ def create_profile(request):
 def new_job(request):
     return render(request, 'employees/redirect-to-new-job.html')
 
+
 def you_would_miss_out(request):
-    return render(request,'employees/you-miss-out.html')
+    return render(request, 'employees/you-miss-out.html')
+
 
 def edit_employee(request, employee_id):
     get_employee = get_object_or_404(Employee, id=employee_id)
@@ -116,5 +120,34 @@ def delete_employee(request, employee_id):
     }
     return render(request, 'employees/delete-employee.html', context)
 
+
 def show_skills(request):
-    pass
+    get_skills_and_employees = Skill.objects.prefetch_related('employees')
+    form = SearchForm(request.GET or None)
+    skills_checkbox = EmployeeBase()
+    if request.method == 'GET' and form.is_valid():
+        skill_to_search = form.cleaned_data['search_field']
+        get_skills_and_employees = get_skills_and_employees.filter(name__icontains=skill_to_search)
+    if request.method == 'POST':
+        pass
+    context = {
+        'skills_and_employees': get_skills_and_employees,
+        'form': form,
+        'skills_in_checkbox':skills_checkbox
+    }
+
+    return render(request, 'employees/skills/skills-main-menu.html', context)
+
+
+def add_skill(request):
+    form = SkillCreate(request.POST or None)
+    get_skills = Skill.objects.all()
+    if request.method == 'POST' and form.is_valid():
+        form.save()
+        return redirect('employees:skills-menu')
+
+    context = {
+        'form': form,
+        'skills':get_skills
+    }
+    return render(request,'employees/skills/create-new-skill.html',context)

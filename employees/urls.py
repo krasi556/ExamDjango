@@ -18,6 +18,7 @@ urlpatterns = [
         path('done/',views.new_job,name='new-job'),
         path('wait/',views.you_would_miss_out,name='you-would-miss-out')
     ])),
-    path('skills-menu/',views.show_skills,name='skills-menu')
+    path('skills-menu/',views.show_skills,name='skills-menu'),
+    path('add-skill/',views.add_skill, name='add-skill')
 
 ]

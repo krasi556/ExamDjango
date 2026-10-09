@@ -1,1 +1,53 @@
 {% extends 'base.html' %}
+{% block content %}
+
+    <div class="container">
+        <h1>Welcome to the skills tree that we got</h1>
+        <div class="card d-flex ">
+            <div>
+                <p>Total skills</p>
+                {{ skills_and_employees.count }}
+            </div>
+            <div>
+                <p>Employees with skills</p>
+                {{ skills_and_employees.employees.count }}
+            </div>
+        </div>
+        <div>
+            <div class="search-label-icon">
+                <form method="GET">
+                    {{ form }}
+                    <button>Search</button>
+                </form>
+            </div>
+            <div>
+                <a href="{% url 'employees:add-skill' %}" class="btn btn-outline-secondary">+ Add Skill</a>
+            </div>
+        </div>
+        <div>
+            {% for skill in skills_and_employees %}
+                <div class="card">
+                    {% if skill %}
+                        <details>
+                            <summary>{{ skill.name }} {{ skill.employees.count }}</summary>
+                            {% for employee in skill.employees.all %}
+                                <a href="{% url 'employees:focused-employee' employee.id %}">{{ employee.first_last_name }}</a>
+                            {% endfor %}
+                        </details>
+                        </div>
+                    {% endif %}
+            {% endfor %}
+        </div>
+        <div>
+            <div>
+                {% for checkbox in skills_in_checkbox.skills %}
+                    <form method="POST">
+                        {% csrf_token %}
+                        {{ checkbox }}
+                    </form>
+                {% endfor %}
+                <button>Check</button>
+            </div>
+        </div>
+    </div>
+{% endblock %}

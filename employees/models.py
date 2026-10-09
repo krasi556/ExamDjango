@@ -25,6 +25,11 @@ class Employee(models.Model):
                                   validators=[symbol_validator])
     last_name = models.CharField(max_length=100,
                                  validators=[symbol_validator])
+
+    @property  # will work to implement  it
+    def first_last_name(self):
+        return f"{self.first_name} {self.last_name}"
+
     profession = models.CharField(
         max_length=20,
         choices=ProfessionChoices.choices,
@@ -70,6 +75,13 @@ class Employee(models.Model):
 class Skill(models.Model):
     name = models.CharField(max_length=100
                             , unique=True)
+    #replaceable_by_ai = models.IntegerField(
+        #null=True,
+        #blank=True
+    #)
+    created_at = models.DateField(
+        auto_now_add=True
+    )
 
     def __str__(self):
         return self.name

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container">
+        <h1>Current skills that we got are</h1>
+        <div>
+            {% for skill in skills %}
+                <div>
+                    <p>{{ skill.name }}</p>
+                    <p> {{ skill.created_at|date:'d.M.Y' }}</p>
+                </div>
+            {% empty %}
+                <h2>Seems like AI didn't come up with anything </h2>
+            {% endfor %}
+        </div>
+        <div>
+            <form method="POST">
+                {% csrf_token %}
+                {{ form }}
+                <button>Send</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
