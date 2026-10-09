@@ -1,6 +1,6 @@
 from django import forms
 
-from employees.models import Employee
+from employees.models import Employee, Skill
 
 
 class EmployeeBase(forms.ModelForm):
@@ -34,4 +34,16 @@ class EditEmployee(EmployeeBase):
 
 
 class CreateEmployee(EmployeeBase):
+    pass
+
+
+class BaseSkill(Skill):
+    pass
+
+
+class SkillCreate(BaseSkill):
+    pass
+
+
+class DeleteSkill(SkillCreate):
     pass

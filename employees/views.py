@@ -115,3 +115,6 @@ def delete_employee(request, employee_id):
         'form': form
     }
     return render(request, 'employees/delete-employee.html', context)
+
+def show_skills(request):
+    pass
