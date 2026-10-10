@@ -1,5 +1,6 @@
 from types import NoneType
 
+from django.core.paginator import Paginator
 from django.db.models import Avg, F, Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 
@@ -15,8 +16,11 @@ def current_employees(request):
                      .annotate(avg_rating=Avg('reviews__rating'))
                      .order_by(F('avg_rating').desc(nulls_last=True), )
                      )
+    paginator = Paginator(obj_employees, 6)
+    page_number = request.GET.get('page')
+    page_obj = paginator.get_page(page_number)
     context = {
-        'employees': obj_employees
+        'employees': page_obj
     }
     return render(request, 'employees/employees-in-db.html', context)
 
