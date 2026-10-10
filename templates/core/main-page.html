@@ -1,2 +1,29 @@
 {% extends 'base.html' %}
-<h1>Lets put I back in IT,  we are dedicated to bring back what matters the most,</h1>
+{% block content %}
+    <div class="row align-items-center g-5 py-4">
+
+        <div class="col-5">
+            {% if employee %}
+                <a href="{% url 'employees:focused-employee' employee.id %}" class="text-decoration-none text-reset d-block">
+                    <img src="{{ employee.photo.url }}"
+                         alt="{{ employee.first_last_name }}"
+                         class="w-50 d-block mx-auto rounded-4 shadow object-fit-cover"
+                         style="aspect-ratio: 2 / 3;">
+                    <div class="text-center mt-3">
+                        <h3 class="mb-0">Our top contributor</h3>
+                        <p class="text-muted mb-2" style="font-size: 0.6rem;">Who definitely never used AI</p>
+                        <h4 class="fw-bold mb-2">{{ employee.first_last_name }}</h4>
+                        <p class="text-secondary mb-0">{{ employee.bio }}</p>
+                    </div>
+                </a>
+            {% endif %}
+        </div>
+
+        <div class="col-7 text-center">
+            <h1 class="display-5 fw-bold mb-4">Lets put I back in IT, we are dedicated to bring back what matters the most,</h1>
+            <h2 class="h4 text-muted fw-normal">Our goal is show you that you don't need AI</h2>
+            <p class="text-muted mt-1" style="font-size: 0.7rem;">...except in very rare cases, when it's us that need it</p>
+        </div>
+
+    </div>
+{% endblock %}

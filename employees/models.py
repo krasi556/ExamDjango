@@ -6,11 +6,15 @@ from django.templatetags.static import static
 
 from core.validators import symbol_validator
 from employees.additional import excuses
+from employees.managers import EmployeeTopManager
 
 
 # Create your models here.
 
 class Employee(models.Model):
+
+    objects = EmployeeTopManager()
+
     class ProfessionChoices(models.TextChoices):
         FULL_STACK_DEVELOPER = 'FULL_STACK_DEV', 'Full-Stack Developer'
         FRONT_END_DEVELOPER = 'FRONT_END_DEV', 'Front-End Developer'

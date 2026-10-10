@@ -27,7 +27,7 @@ def current_employees(request):
 
 def focused_employee(request, employee_id):
     get_employee = get_object_or_404(Employee.objects
-                                     .annotate(avg_rating=Avg('reviews__rating'))
+                                     .get_avg_rating()
                                      .prefetch_related('skills')
                                      , id=employee_id)
 
@@ -161,3 +161,4 @@ def add_skill(request):
         'skills': get_skills
     }
     return render(request, 'employees/skills/create-new-skill.html', context)
+
