@@ -6,7 +6,7 @@
                 <a href="{% url 'reviews:leave-review' employee.id %}"
                    class="btn btn-light border-0 w-100 h-100 p-4 shadow-sm d-flex flex-column align-items-center justify-content-center text-center">
                     <h5 class="card-title mb-3">
-                        {employee.first_last_name}
+                        {{employee.first_name}}
                     </h5>
                     <img src="{{ employee.photo.url }}"
                          class="rounded shadow-sm"

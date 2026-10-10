@@ -1,6 +1,6 @@
 from types import NoneType
 
-from django.db.models import Avg, F
+from django.db.models import Avg, F, Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 
 from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee, SearchForm, SkillCreate
@@ -122,18 +122,24 @@ def delete_employee(request, employee_id):
 
 
 def show_skills(request):
-    get_skills_and_employees = Skill.objects.prefetch_related('employees')
+    get_skills_and_employees = (Skill.objects
+                                .prefetch_related('employees'))
     form = SearchForm(request.GET or None)
     skills_checkbox = EmployeeBase()
+    employees_with_skills = Employee.objects.filter(skills__isnull=False).distinct().count()
     if request.method == 'GET' and form.is_valid():
-        skill_to_search = form.cleaned_data['search_field']
-        get_skills_and_employees = get_skills_and_employees.filter(name__icontains=skill_to_search)
+        skill_to_search, ids = form.cleaned_data['search_field'], [int(num) for num in request.GET.getlist('skills')]
+        if ids:
+            get_skills_and_employees = get_skills_and_employees.filter(id__in=ids)
+        if skill_to_search:
+            get_skills_and_employees = get_skills_and_employees.filter(name__icontains=skill_to_search)
     if request.method == 'POST':
         pass
     context = {
         'skills_and_employees': get_skills_and_employees,
         'form': form,
-        'skills_in_checkbox':skills_checkbox
+        'skills_in_checkbox': skills_checkbox,
+        'employees_with_skills': employees_with_skills
     }
 
     return render(request, 'employees/skills/skills-main-menu.html', context)
@@ -148,6 +154,6 @@ def add_skill(request):
 
     context = {
         'form': form,
-        'skills':get_skills
+        'skills': get_skills
     }
-    return render(request,'employees/skills/create-new-skill.html',context)
+    return render(request, 'employees/skills/create-new-skill.html', context)

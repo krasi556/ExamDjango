@@ -1,53 +1,97 @@
+```html
 {% extends 'base.html' %}
 {% block content %}
 
-    <div class="container">
-        <h1>Welcome to the skills tree that we got</h1>
-        <div class="card d-flex ">
-            <div>
-                <p>Total skills</p>
-                {{ skills_and_employees.count }}
-            </div>
-            <div>
-                <p>Employees with skills</p>
-                {{ skills_and_employees.employees.count }}
-            </div>
-        </div>
-        <div>
-            <div class="search-label-icon">
-                <form method="GET">
-                    {{ form }}
-                    <button>Search</button>
-                </form>
-            </div>
-            <div>
-                <a href="{% url 'employees:add-skill' %}" class="btn btn-outline-secondary">+ Add Skill</a>
-            </div>
-        </div>
-        <div>
-            {% for skill in skills_and_employees %}
-                <div class="card">
-                    {% if skill %}
-                        <details>
-                            <summary>{{ skill.name }} {{ skill.employees.count }}</summary>
-                            {% for employee in skill.employees.all %}
-                                <a href="{% url 'employees:focused-employee' employee.id %}">{{ employee.first_last_name }}</a>
-                            {% endfor %}
-                        </details>
+
+
+    <div class="skills-page mx-auto mb-5">
+        <h1 class="fs-3 fw-bold text-center mb-5">Welcome to the skills tree that we got</h1>
+        <div class="row g-4">
+            <section class="col-12">
+                <div class="row g-5 mb-4 mx-auto" style="width:52%">
+                    <div class="col-6">
+                        <div class="card h-100 p-3 text-center">
+                            <p class="small text-muted mb-1">Total skills</p>
+                            <span class="fs-2 fw-bold text-primary">{{ skills_and_employees.count }}</span>
                         </div>
-                    {% endif %}
-            {% endfor %}
-        </div>
-        <div>
-            <div>
-                {% for checkbox in skills_in_checkbox.skills %}
-                    <form method="POST">
-                        {% csrf_token %}
-                        {{ checkbox }}
-                    </form>
-                {% endfor %}
-                <button>Check</button>
+                    </div>
+                    <div class="col-6">
+                        <div class="card h-100 p-3 text-center">
+                            <p class="small text-muted mb-1">Employees with skills</p>
+                            <span class="fs-2 fw-bold text-success">{{ employees_with_skills }}</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="d-flex gap-3 mb-4 w-100">
+                    <div class="search-label-icon flex-grow-1">
+                        <form class="skills-search position-relative mb-0">
+                            {{ form }}
+                            <button class="skills-search-btn">
+                                <svg width="16" height="16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                                </svg>
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <div class="d-flex gap-4">
+                <div class="col-lg-3">
+                    <div class="mb-5">
+                        <a href="{% url 'employees:add-skill' %}"
+                           class="btn btn-primary text-nowrap d-flex align-items-center px-5"
+                           style="background-color: #4f46e5; border-color: #1a10db; color: white;">+ Add Skill</a>
+                    </div>
+
+
+                    <aside>
+                        <div class="skills-sidebar">
+                            <div class="card">
+                                <div class="card-body">
+                                    <form>
+                                        <div class="skills-checkboxes d-flex flex-column gap-2">
+                                            {% for checkbox in skills_in_checkbox.skills %}
+
+                                                {% csrf_token %}
+                                                {{ checkbox }}
+                                            {% endfor %}
+                                        </div>
+                                        <button class="btn btn-primary w-100 mt-3">Check</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </aside>
+                </div>
+                <div class="flex-grow-1">
+                    <div class="card skills-list">
+                        {% for skill in skills_and_employees %}
+                            <div class="skill-item">
+                                {% if skill %}
+                                    <details>
+                                        <summary class="d-flex align-items-center gap-3 p-3">
+                                            <span class="skill-icon">&lt;/&gt;</span>
+                                            <span class="me-auto">
+                                                <span class="d-block fs-5">{{ skill.name }}</span>
+                                                <small class="text-muted">{{ skill.employees.count }} employees</small>
+                                            </span>
+                                        </summary>
+                                        <div class="skill-employees d-flex gap-3 p-3 bg-light border-top border-secondary-subtle">
+                                            {% for employee in skill.employees.all %}
+                                                <a href="{% url 'employees:focused-employee' employee.id %}"
+                                                   class="btn btn-sm btn-outline-primary rounded-pill ">{{ employee.first_last_name }}</a>
+                                            {% endfor %}
+                                        </div>
+                                    </details>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 {% endblock %}
+```
