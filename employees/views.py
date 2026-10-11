@@ -1,9 +1,11 @@
 from types import NoneType
 
+from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Avg, F, Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 
+from core.views import handle_error404
 from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee, SearchForm, SkillCreate
 from employees.models import Employee, Skill
 from reviews.forms import ReviewForms
@@ -40,9 +42,6 @@ def focused_employee(request, employee_id):
         form = ReviewForms(request.POST or None)
         review_check = True
 
-    if request.GET.get('hire_check'):
-        return hire_employee(request, get_employee)
-
     context = {
         'employee': get_employee,
         'form': form,
@@ -68,7 +67,8 @@ def leave_a_review(request, get_employee):
     return render(request, 'employees/focused-employee.html', context)
 
 
-def hire_employee(request, get_employee):
+def hire_employee(request, employee_id):
+    get_employee = get_object_or_404(Employee, id=employee_id)
     get_employee.is_available = False
     get_employee.save()
     return redirect('employees:current-employees')
@@ -98,12 +98,13 @@ def you_would_miss_out(request):
 
 def edit_employee(request, employee_id):
     get_employee = get_object_or_404(Employee, id=employee_id)
+    form = EditEmployee(instance=get_employee)
     if request.method == 'POST':
         form = EditEmployee(request.POST, request.FILES, instance=get_employee)
         if form.is_valid():
             form.save()
             return redirect('employees:current-employees')
-    form = EditEmployee(instance=get_employee)
+
     context = {
         'employee': get_employee,
         'form': form
@@ -132,13 +133,16 @@ def show_skills(request):
     skills_checkbox = EmployeeBase()
     employees_with_skills = Employee.objects.filter(skills__isnull=False).distinct().count()
     if request.method == 'GET' and form.is_valid():
-        skill_to_search, ids = form.cleaned_data['search_field'], [int(num) for num in request.GET.getlist('skills')]
+        skill_to_search = form.cleaned_data['search_field']
+        try:
+            ids = [int(num) for num in request.GET.getlist('skills')]
+        except ValueError:
+            return handle_error404(request, None)
+
         if ids:
             get_skills_and_employees = get_skills_and_employees.filter(id__in=ids)
         if skill_to_search:
             get_skills_and_employees = get_skills_and_employees.filter(name__icontains=skill_to_search)
-    if request.method == 'POST':
-        pass
     context = {
         'skills_and_employees': get_skills_and_employees,
         'form': form,
@@ -161,4 +165,3 @@ def add_skill(request):
         'skills': get_skills
     }
     return render(request, 'employees/skills/create-new-skill.html', context)
-

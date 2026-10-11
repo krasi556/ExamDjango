@@ -31,7 +31,7 @@ def contact_us(request):
 
     form = TotallyLegitForm(request.POST or None)
     if request.method == 'POST' and form.is_valid():
-        redirect('core:load-main-page')
+        return redirect('core:load-main-page')
     context = {
         'form': form
     }

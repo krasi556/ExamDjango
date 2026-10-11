@@ -1,9 +1,10 @@
 {% if not review_check %}
     <div class="d-flex gap-4 py-3">
         {% if employee.is_available %}
-            <a class="btn btn-success" href="{% url 'employees:focused-employee' employee.id %}?hire_check=True">
-                Hire
-            </a>
+            <form action="{% url 'employees:hire-employee' employee.id %}">
+                {% csrf_token %}
+                <button class="btn btn-success">Hire</button>
+            </form>
         {% endif %}
         <a class="btn btn-outline-primary" href="{% url 'employees:focused-employee' employee.id %}?review_check=True">
             Leave a review

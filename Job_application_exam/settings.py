@@ -33,7 +33,7 @@ ADDITIONAL_APPS = [
     'core',
     'reviews',
     'employees',
-    'careers',
+
 
 
 ]
