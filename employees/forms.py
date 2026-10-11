@@ -4,6 +4,7 @@ from employees.models import Employee, Skill
 
 
 class EmployeeBase(forms.ModelForm):
+
     class Meta:
         model = Employee
         fields = ['first_name', 'last_name', 'profession', 'years_of_experience', 'bio', 'hourly_rate', 'photo',
@@ -11,6 +12,7 @@ class EmployeeBase(forms.ModelForm):
         widgets = {
             'bio': forms.TextInput(attrs={
                 'placeholder': 'Short bio about yourself',
+
             }),
             'skills': forms.CheckboxSelectMultiple()
         }
@@ -20,6 +22,14 @@ class EmployeeBase(forms.ModelForm):
         help_texts = {
             'photo': 'Not required',
             'skills': 'Not required'
+        }
+
+        error_messages = {
+            'years_of_experience':{'required':'don"t skip it',
+                                   'mav_value':'You wish you had %(value)s of experience '},
+            'hourly_rate':{'max_value':'Nobody is that expensive'},
+            'bio':{'required':'Even AI has something to say about itself'}
+
         }
 
 

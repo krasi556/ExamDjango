@@ -6,7 +6,7 @@
                 <p style="font-size: 2px; line-height: 1; margin-left: 15rem;">We require more souls for the AI overloads</p>
         </div>
         <div class="card-body pt-3 ps-5 pe-3 pb-0">
-            <form method="post" enctype="multipart/form-data" class="employee-form flex-column gap-3">
+            <form method="post" enctype="multipart/form-data" class="employee-form flex-column gap-3" novalidate>
                 {% csrf_token %}
                 {{ form }}
                 <div class="d-flex gap-4 mt-4">

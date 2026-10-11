@@ -1,7 +1,7 @@
 {% if not review_check %}
     <div class="d-flex gap-4 py-3">
         {% if employee.is_available %}
-            <form action="{% url 'employees:hire-employee' employee.id %}">
+            <form method="POST" action="{% url 'employees:hire-employee' employee.id %}">
                 {% csrf_token %}
                 <button class="btn btn-success">Hire</button>
             </form>

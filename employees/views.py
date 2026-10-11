@@ -68,6 +68,8 @@ def leave_a_review(request, get_employee):
 
 
 def hire_employee(request, employee_id):
+    if not request.method == 'POST':
+        return redirect('employees:focused-employee',employee_id)
     get_employee = get_object_or_404(Employee, id=employee_id)
     get_employee.is_available = False
     get_employee.save()
