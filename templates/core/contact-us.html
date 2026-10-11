@@ -1,0 +1,78 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="container-fluid py-5 px-5">
+    <div class="row align-items-center g-5">
+
+        <!-- Contact form on the left -->
+        <div class="col-5">
+            <div class="card border-0 rounded-4 shadow p-4 p-md-5">
+
+                <div class="text-center mb-4">
+                    <div class="display-5 mb-2">💬</div>
+                    <h3 class="fw-bold mb-2">Contact us</h3>
+                    <p class="text-muted mb-0">
+                        Send us a message. It won't be thrown in the bin, we promise.
+                    </p>
+                </div>
+
+                <form class="review-form" method="POST" novalidate>
+                    {% csrf_token %}
+                    {{ form }}
+
+                    <button class="btn btn-dark w-100 rounded-3 mt-3 py-2">
+                        Send (and pray) ✉️
+                    </button>
+                </form>
+
+                <p class="text-muted text-center mt-3 mb-0"
+                   style="font-size: 0.75rem;">
+                    Your message is safe with our very human team.
+                    <span style="font-size: 8px;">(This message will definitely be used to train our future ai overlords)</span>
+                </p>
+
+            </div>
+        </div>
+
+        <!-- Text on the right -->
+        <div class="col-7">
+            <div class="text-center px-4">
+
+                <div class="display-1 mb-3">☎️❌</div>
+
+                <span class="badge text-bg-dark rounded-pill px-3 py-2 mb-3">
+                    Customer support
+                </span>
+
+                <h2 class="fw-bold mb-4">
+                    Unfortunately, we currently have no hot-line
+                </h2>
+
+                <p class="text-muted fs-5 mb-2">
+                    If you want to contact us
+                    <span class="fst-italic">(hopefully you won't)</span>,
+                    feel free to use
+                </p>
+
+                <div class="card border-0 rounded-4 shadow-sm p-4 my-4">
+                    <h4 class="fw-bold mb-3">
+                        The live chat our company provides
+                    </h4>
+
+                    <p class="text-secondary mb-0">
+                        Works 24/7, provides the best human-like service
+                        and is the best agent of our company.
+                    </p>
+                </div>
+
+                <p class="text-muted mt-3 mb-0" style="font-size: 0.7rem;">
+                    ...sometimes we use it as an employee as well!
+                </p>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}
