@@ -11,7 +11,6 @@ from employees.managers import EmployeeTopManager
 # Create your models here.
 
 class Employee(models.Model):
-
     objects = EmployeeTopManager()
 
     class ProfessionChoices(models.TextChoices):
@@ -60,6 +59,16 @@ class Employee(models.Model):
         related_name='employees'
     )
 
+    class Meta:
+        verbose_name_plural = 'Employees'
+        constraints = [
+            models.UniqueConstraint(
+                fields=['first_name', 'last_name'],
+                name='different_first_last_name',
+                violation_error_code='Please try something realistic'
+            )
+        ]
+
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
@@ -81,5 +90,6 @@ class Skill(models.Model):
     created_at = models.DateField(
         auto_now_add=True
     )
+
     def __str__(self):
         return self.name

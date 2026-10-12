@@ -27,6 +27,9 @@ class Review(models.Model):
     )
     rating = models.SmallIntegerField(choices=RatingChoices.choices)
 
+    class Meta:
+        ordering = ['-created_at']
+
     def save(self, *args, **kwargs):
         if not self.id:
             self.text = scam_messages(self.rating, self.text)
