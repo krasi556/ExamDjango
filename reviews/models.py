@@ -1,5 +1,7 @@
 from django.core.validators import MinValueValidator, MaxValueValidator, MinLengthValidator
 from django.db import models
+from django.db.models import Q
+from django.db.models.constraints import CheckConstraint
 
 from reviews.additional import scam_messages
 
@@ -29,6 +31,7 @@ class Review(models.Model):
 
     class Meta:
         ordering = ['-created_at']
+
 
     def save(self, *args, **kwargs):
         if not self.id:

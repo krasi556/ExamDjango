@@ -1,6 +1,4 @@
-from types import NoneType
 
-from django.core.exceptions import ValidationError
 from django.core.paginator import Paginator
 from django.db.models import Avg, F, Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect

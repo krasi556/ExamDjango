@@ -2,6 +2,9 @@ import random
 
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
+from django.db.models import F, Q
+from django.db.models.functions import Length
+from django.db.models.lookups import GreaterThan
 
 from core.validators import symbol_validator
 from employees.additional import excuses
@@ -62,10 +65,15 @@ class Employee(models.Model):
     class Meta:
         verbose_name_plural = 'Employees'
         constraints = [
-            models.UniqueConstraint(
-                fields=['first_name', 'last_name'],
+            models.CheckConstraint(
+                check=~Q(first_name=F('last_name')),
                 name='different_first_last_name',
-                violation_error_code='Please try something realistic'
+                violation_error_message='Please try something realistic'
+            ),
+            models.CheckConstraint(
+                check=GreaterThan(Length('bio'), 10),
+                name='bio_longer_than_10',
+                violation_error_message='Give a real  bio'
             )
         ]
 

@@ -25,7 +25,7 @@ class EmployeeBase(forms.ModelForm):
 
         error_messages = {
             'years_of_experience': {'required': 'don"t skip it',
-                                    'max_value': 'You wish you had %(value)s of experience '},
+                                    'max_value': 'You wish you had %(value)s years of experience '},
             'bio': {'required': 'Even AI has something to say about itself'}
 
         }
