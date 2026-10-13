@@ -29,7 +29,7 @@ def leave_review(request, employee_id):
             review = form.save(commit=False)
             review.employee = employee
             review.save()
-            return redirect('employees:focused-employee', employee_id=employee.id)
+            return redirect('employees:focused-employee', pk=employee.id)
     context = {
         'employee': employee,
         'form': form
@@ -56,7 +56,7 @@ def edit_review(request, review_id):
     form = EditReview(request.POST or None, instance=review)
     if request.method == 'POST' and form.is_valid():
         form.save()
-        return redirect('employees:focused-employee', employee_id=review.employee_id)
+        return redirect('employees:focused-employee', pk=review.employee_id)
     context = {
         'form': form,
         'employee': review.employee,
