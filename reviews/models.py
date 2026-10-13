@@ -37,3 +37,6 @@ class Review(models.Model):
         if not self.id:
             self.text = scam_messages(self.rating, self.text)
         super().save(*args, **kwargs)
+
+    def __str__(self):
+        return self.text
