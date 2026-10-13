@@ -66,12 +66,12 @@ class Employee(models.Model):
         verbose_name_plural = 'Employees'
         constraints = [
             models.CheckConstraint(
-                check=~Q(first_name=F('last_name')),
+                condition=~Q(first_name=F('last_name')),
                 name='different_first_last_name',
                 violation_error_message='Please try something realistic'
             ),
             models.CheckConstraint(
-                check=GreaterThan(Length('bio'), 10),
+                condition=GreaterThan(Length('bio'), 10),
                 name='bio_longer_than_10',
                 violation_error_message='Give a real  bio'
             )

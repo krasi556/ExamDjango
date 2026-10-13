@@ -8,10 +8,10 @@ urlpatterns = [
 
     path('', views.current_employees, name='current-employees'),
     path('join-us/', views.create_profile, name='create-profile'),
-    path('employee-<int:employee_id>/', include([
+    path('employee-<int:pk>/', include([
         path('', views.focused_employee, name='focused-employee'),
         path('edit/', views.edit_employee, name='edit'),
-        path('delete/', views.delete_employee, name='delete'),
+        path('delete/', views.DeleteEmployeeView.as_view(), name='delete'),
         path('hire/', views.hire_employee, name='hire-employee')
 
     ])),

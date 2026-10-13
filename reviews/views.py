@@ -1,5 +1,7 @@
 from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import DeleteView
 
 from employees.models import Employee
 from reviews.forms import ReviewForms, CreateReview, EditReview, DeleteReview
@@ -61,7 +63,6 @@ def edit_review(request, review_id):
         'review': review
     }
     return render(request, 'reviews/edit-review.html', context)
-
 
 def delete_review(request, review_id):
     review = get_object_or_404(Review, id=review_id)
