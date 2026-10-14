@@ -1,12 +1,14 @@
-<nav class="navbar navbar-expand-lg">
+<nav class="navbar navbar-expand-lg bg-black bg-opacity-75 shadow-sm">
     <div class="container">
-        <a class="navbar-brand custom-nav-link ps-0"  href="{% url 'core:load-main-page' %}">Hire an IT 'Expert'</a>
-            <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="custom-nav-link" href="{% url 'core:load-main-page' %}">Home</a></li>
-                <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:current-employees' %}">Employees</a></li>
-                <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:create-profile' %}">Join us</a></li>
-                <li class="nav-item"><a class="custom-nav-link" href="{% url 'reviews:show-employees-reviews' %}">Leave review</a></li>
-                <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:skills-menu' %}">Skills</a></li>
-            </ul>
+        <a class="navbar-brand custom-nav-link ps-0" href="{% url 'core:load-main-page' %}">Hire an IT 'Expert'</a>
+        <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="custom-nav-link" href="{% url 'core:load-main-page' %}">Home</a></li>
+            <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:current-employees' %}">Employees</a>
+            </li>
+            <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:create-profile' %}">Join us</a></li>
+            <li class="nav-item"><a class="custom-nav-link" href="{% url 'reviews:show-employees-reviews' %}">Leave
+                review</a></li>
+            <li class="nav-item"><a class="custom-nav-link" href="{% url 'employees:skills-menu' %}">Skills</a></li>
+        </ul>
     </div>
 </nav>

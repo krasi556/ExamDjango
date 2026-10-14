@@ -215,3 +215,12 @@ details[open] {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+
+.navbar .custom-nav-link {
+    color: #f8f9fa;
+}
+
+.navbar .custom-nav-link:hover {
+    color: #6ea8fe;
+}
