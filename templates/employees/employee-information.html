@@ -6,7 +6,7 @@
                 <button class="btn btn-success">Hire</button>
             </form>
         {% endif %}
-        <a class="btn btn-outline-primary" href="{% url 'employees:focused-employee' employee.id %}?review_check=True">
+        <a class="btn btn-outline-primary" href="{% url 'employees:edit-employee-review' employee.id %}?review_check=True"> {# butona za review #}
             Leave a review
         </a>
         <a class="btn btn-outline-secondary" href="{% url 'employees:edit' employee.id %}">Edit employee</a>

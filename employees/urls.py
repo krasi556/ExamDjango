@@ -9,10 +9,11 @@ urlpatterns = [
     path('', views.current_employees, name='current-employees'),
     path('join-us/', views.CreateEmployeeView.as_view(), name='create-profile'),
     path('employee-<int:pk>/', include([
-        path('', views.focused_employee, name='focused-employee'),
+        path('', views.FocusedEmployee.as_view(), name='focused-employee'),
         path('edit/', views.EditEmployeeView.as_view(), name='edit'),
         path('delete/', views.DeleteEmployeeView.as_view(), name='delete'),
-        path('hire/', views.hire_employee, name='hire-employee')
+        path('hire/', views.hire_employee, name='hire-employee'),
+        path('edit-review/',views.LeaveAReview.as_view(),name='edit-employee-review')
 
     ])),
     path('join-us/', include([

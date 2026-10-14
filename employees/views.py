@@ -2,12 +2,14 @@ from django.core.paginator import Paginator
 from django.db.models import Avg, F, Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView, UpdateView, CreateView
+from django.views import View
+from django.views.generic import DeleteView, UpdateView, CreateView, DetailView
 
 from core.views import handle_error404
 from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee, SearchForm, SkillCreate
 from employees.models import Employee, Skill
 from reviews.forms import ReviewForms
+from reviews.models import Review
 
 
 # Create your views here.
@@ -26,31 +28,45 @@ def current_employees(request):
     return render(request, 'employees/employees-in-db.html', context)
 
 
-def focused_employee(request, pk):
+def focused_employee(request, pk):  # TOWA SAHTE BUDE SAMO SHABLONA , ZA POST TURSI SUBMIT BUTONA
     get_employee = get_object_or_404(Employee.objects
                                      .get_avg_rating()
                                      .prefetch_related('skills')
                                      , id=pk)
-
     if request.method == 'POST':
         return leave_a_review(request, get_employee)
-
     review_check = False
     form = ''
     if request.GET.get('review_check'):
         form = ReviewForms(request.POST or None)
         review_check = True
-
     context = {
         'employee': get_employee,
         'form': form,
         'review_check': review_check
     }
-
     return render(request, 'employees/focused-employee.html', context)
 
 
-def leave_a_review(request, get_employee):
+class FocusedEmployee(DetailView):
+    model = Employee
+    template_name = 'employees/focused-employee.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['review_check'] = bool(self.request.GET.get('review_check'))
+        # context['review_check'] = False if not self.request.GET.get('review_check') else True
+
+        return context
+
+    def get_queryset(self):
+        return (Employee.objects
+                .get_avg_rating()
+                .prefetch_related('skills')
+                )
+
+
+def leave_a_review(request, get_employee):  # TWA E ZA FUNKCIQTA OTGORE KDETO SE IZVIKWA
     form = ReviewForms(request.POST)
     if form.is_valid():
         review = form.save(commit=False)
@@ -66,6 +82,29 @@ def leave_a_review(request, get_employee):
     return render(request, 'employees/focused-employee.html', context)
 
 
+class LeaveAReview(CreateView):  # TW E ZA clasa -A OTGORE
+    model = Review
+    form_class = ReviewForms
+    success_url = reverse_lazy('employees:current-employees')
+    template_name = 'employees/focused-employee.html'
+
+    def find_current_employee(self):
+        return get_object_or_404(Employee, pk=self.kwargs['pk'])
+
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['employee'] = self.find_current_employee()
+        context['review_check'] = True
+        return context
+
+    def form_valid(self, form):
+        form.instance.employee = self.find_current_employee()
+        return super().form_valid(form)
+
+
+
+
 def hire_employee(request, pk):
     if not request.method == 'POST':
         return redirect('employees:focused-employee', pk)
@@ -73,7 +112,6 @@ def hire_employee(request, pk):
     get_employee.is_available = False
     get_employee.save()
     return redirect('employees:current-employees')
-
 
 
 class CreateEmployeeView(CreateView):
