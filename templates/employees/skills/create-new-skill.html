@@ -1,22 +1,33 @@
 {% extends 'base.html' %}
 {% block content %}
-    <div class="container">
-        <h1>Current skills that we got are</h1>
-        <div>
-            {% for skill in skills %}
-                <div>
-                    <p>{{ skill.name }}</p>
-                    <p> {{ skill.created_at|date:'d.M.Y' }}</p>
-                </div>
-            {% empty %}
-                <h2>Seems like AI didn't come up with anything </h2>
-            {% endfor %}
+    <div class="card shadow mx-auto mt-4 border-0" style="width: 650px;">
+
+        <div class="card-header bg-light px-4 py-3">
+            <h5 class="mb-0">Current skills that we got</h5>
+            <small class="text-muted">Add a new one below</small>
         </div>
-        <div>
-            <form method="POST">
+
+        <div class="card-body px-5 py-4">
+            <ul class="list-group list-group-flush mb-4 overflow-auto" style="max-height: 260px;padding: 0 2rem 0 1rem" >
+                {% for skill in skills %}
+                    <li class="list-group-item d-flex justify-content-between align-items-center px-0">
+                        <span>{{ skill.name }}</span>
+                        <small class="text-muted">{{ skill.created_at|date:'d.M.Y' }}</small>
+                    </li>
+                {% empty %}
+                    <li class="list-group-item text-muted px-0">
+                        Seems like AI didn't come up with anything
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <form method="POST" class="review-form">
                 {% csrf_token %}
                 {{ form }}
-                <button>Send</button>
+                <div class="d-flex justify-content-between align-items-center border-top pt-4 mt-4">
+                    <button class="btn btn-outline-secondary px-4">Add skill</button>
+                    <a href="{% url 'employees:skills-menu' %}" class="btn btn-primary px-4">Cancel</a>
+                </div>
             </form>
         </div>
     </div>

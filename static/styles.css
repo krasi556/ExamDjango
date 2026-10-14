@@ -205,3 +205,13 @@ details[open] {
 .skills-checkboxes input[type="checkbox"] {
     accent-color: #0d6efd;
 }
+
+.main-bg {
+    background-image:
+        linear-gradient(rgba(255, 255, 255, 0.6), rgba(255, 255, 255, 0.6)),
+        url('Gemini_Generated_Image_j21cvnj21cvnj21c.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}

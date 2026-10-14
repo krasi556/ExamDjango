@@ -1,5 +1,6 @@
 ```html
 {% extends 'base.html' %}
+{% block body_class %}main-bg{% endblock %}
 {% block content %}
 
 
@@ -12,7 +13,7 @@
                     <div class="col-6">
                         <div class="card h-100 p-3 text-center">
                             <p class="small text-muted mb-1">Total skills</p>
-                            <span class="fs-2 fw-bold text-primary">{{ skills_and_employees.count }}</span>
+                            <span class="fs-2 fw-bold text-primary">{{ total_skills }}</span>
                         </div>
                     </div>
                     <div class="col-6">
