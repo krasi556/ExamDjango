@@ -7,7 +7,7 @@ app_name = 'employees'
 urlpatterns = [
 
     path('', views.current_employees, name='current-employees'),
-    path('join-us/', views.create_profile, name='create-profile'),
+    path('join-us/', views.CreateEmployeeView.as_view(), name='create-profile'),
     path('employee-<int:pk>/', include([
         path('', views.focused_employee, name='focused-employee'),
         path('edit/', views.EditEmployeeView.as_view(), name='edit'),

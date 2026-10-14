@@ -75,18 +75,12 @@ def hire_employee(request, pk):
     return redirect('employees:current-employees')
 
 
-def create_profile(request):
-    form = CreateEmployee()
-    if request.method == 'POST':
-        form = CreateEmployee(request.POST, request.FILES or None)
-        if form.is_valid():
-            form.save()
-            return redirect('employees:new-job')
-    context = {
-        'form': form
-    }
 
-    return render(request, 'employees/create-profile.html', context)
+class CreateEmployeeView(CreateView):
+    model = Employee
+    form_class = CreateEmployee
+    success_url = reverse_lazy('employees:new-job')
+    template_name = 'employees/create-profile.html'
 
 
 def new_job(request):
@@ -141,6 +135,7 @@ def show_skills(request):
     }
 
     return render(request, 'employees/skills/skills-main-menu.html', context)
+
 
 #
 # def add_skill(request):
