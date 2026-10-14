@@ -39,3 +39,10 @@ def stars_cont(value):
         number = max(1, min(5, rounded_number))
         return ratings[number]
     return 'No rating yet, probably because he is busy fixing your code'
+
+
+@register.filter
+def text_color(availability):
+    if availability == 'Currently available':
+        return '#008000'
+    return '#FF0000'

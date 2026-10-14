@@ -21,7 +21,7 @@
                             <p class="card-text mb-1 fw-semibold text-secondary">{{ employee.get_profession_display }}</p>
                             <p class="card-text mb-1">Hourly rate: {% color_by_hourly_rate employee.hourly_rate %}</p>
                             <p class="card-text mb-1">Rating: {{ employee.avg_rating|stars_cont }}</p>
-                            <p class="card-text text-muted small mt-1 mb-1">{{ employee.current_task }}</p>
+                            <p style="color: {{ employee.current_task|text_color }}" class="card-text small mt-1 mb-1">{{ employee.current_task }}</p>
                         </div>
 
                         <div class="card-footer bg-transparent border-top-0 pb-3 pt-0">

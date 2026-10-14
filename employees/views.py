@@ -2,7 +2,7 @@ from django.core.paginator import Paginator
 from django.db.models import Avg, F, Q
 from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import DeleteView
+from django.views.generic import DeleteView, UpdateView, CreateView
 
 from core.views import handle_error404
 from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee, SearchForm, SkillCreate
@@ -97,20 +97,11 @@ def you_would_miss_out(request):
     return render(request, 'employees/you-miss-out.html')
 
 
-def edit_employee(request, pk):
-    get_employee = get_object_or_404(Employee, id=pk)
-    form = EditEmployee(instance=get_employee)
-    if request.method == 'POST':
-        form = EditEmployee(request.POST, request.FILES, instance=get_employee)
-        if form.is_valid():
-            form.save()
-            return redirect('employees:current-employees')
-
-    context = {
-        'employee': get_employee,
-        'form': form
-    }
-    return render(request, 'employees/edit-employee.html', context)
+class EditEmployeeView(UpdateView):
+    model = Employee
+    template_name = 'employees/edit-employee.html'
+    form_class = EditEmployee
+    success_url = reverse_lazy('employees:current-employees')
 
 
 class DeleteEmployeeView(DeleteView):
@@ -118,9 +109,6 @@ class DeleteEmployeeView(DeleteView):
     template_name = 'employees/delete-employee.html'
     form_class = DeleteEmployee
     success_url = reverse_lazy('core:load-main-page')
-
-    def get_context_object_name(self, obj):
-        return 'employee'
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -154,16 +142,28 @@ def show_skills(request):
 
     return render(request, 'employees/skills/skills-main-menu.html', context)
 
+#
+# def add_skill(request):
+#     form = SkillCreate(request.POST or None)
+#     get_skills = Skill.objects.all()
+#     if request.method == 'POST' and form.is_valid():
+#         form.save()
+#         return redirect('employees:skills-menu')
+#
+#     context = {
+#         'form': form,
+#         'skills': get_skills
+#     }
+#     return render(request, 'employees/skills/create-new-skill.html', context)
 
-def add_skill(request):
-    form = SkillCreate(request.POST or None)
-    get_skills = Skill.objects.all()
-    if request.method == 'POST' and form.is_valid():
-        form.save()
-        return redirect('employees:skills-menu')
 
-    context = {
-        'form': form,
-        'skills': get_skills
-    }
-    return render(request, 'employees/skills/create-new-skill.html', context)
+class AddSkill(CreateView):
+    model = Skill
+    template_name = 'employees/skills/create-new-skill.html'
+    success_url = reverse_lazy('employees:skills-menu')
+    form_class = SkillCreate
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['skills'] = Skill.objects.all()
+        return context

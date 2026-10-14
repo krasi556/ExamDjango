@@ -32,7 +32,6 @@ class Review(models.Model):
     class Meta:
         ordering = ['-created_at']
 
-
     def save(self, *args, **kwargs):
         if not self.id:
             self.text = scam_messages(self.rating, self.text)
