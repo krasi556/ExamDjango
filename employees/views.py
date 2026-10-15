@@ -143,21 +143,6 @@ def show_skills(request):
     return render(request, 'employees/skills/skills-main-menu.html', context)
 
 
-#
-# def add_skill(request):
-#     form = SkillCreate(request.POST or None)
-#     get_skills = Skill.objects.all()
-#     if request.method == 'POST' and form.is_valid():
-#         form.save()
-#         return redirect('employees:skills-menu')
-#
-#     context = {
-#         'form': form,
-#         'skills': get_skills
-#     }
-#     return render(request, 'employees/skills/create-new-skill.html', context)
-
-
 class AddSkill(CreateView):
     model = Skill
     template_name = 'employees/skills/create-new-skill.html'

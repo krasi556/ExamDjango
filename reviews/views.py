@@ -1,7 +1,5 @@
 from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
-from django.views.generic import DeleteView
 
 from employees.models import Employee
 from reviews.forms import ReviewForms, CreateReview, EditReview, DeleteReview
