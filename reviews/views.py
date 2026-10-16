@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Avg
 from django.shortcuts import render, get_object_or_404, redirect
 
@@ -12,8 +13,11 @@ def show_employees_for_review(request):
     all_employees = Employee.objects.all()
 
     form = ReviewForms()
+    paginator = Paginator(all_employees, 1)
+    page = request.GET.get('page')
+    page_obj = paginator.get_page(page)
     context = {
-        'employees': all_employees,
+        'employees': page_obj,
         'form': form
     }
     return render(request, 'reviews/review-employees.html', context)
