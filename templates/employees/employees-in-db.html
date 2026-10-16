@@ -3,9 +3,10 @@
 {% load custom_tags %}
 {% block body_class %}main-bg{% endblock %}
 {% block title %}
-    Welcome to our page with real IT agents ! {# that was a lie  #}
+    Welcome to our page with real IT agents !
 {% endblock %}
 {% block content %}
+    {% if employees %}
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for employee in employees %}
             <div class="col">
@@ -60,5 +61,8 @@
                 {% endif %}
             </ul>
         </nav>
+    {% endif %}
+        {% else %}
+        <h1>Be the first one to join this great website!</h1>
     {% endif %}
 {% endblock %}

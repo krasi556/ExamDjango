@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block body_class %}main-bg{% endblock %}
 {% block content %}
+    {% if employees %}
     <div class="row row-cols-1 row-cols-md-3 g-4">
         {% for employee in employees %}
             <div class="col">
@@ -17,4 +18,7 @@
             </div>
         {% endfor %}
     </div>
+        {% else %}
+        <h1>No employees, no reviews...</h1>
+    {% endif %}
 {% endblock %}
