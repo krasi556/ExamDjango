@@ -1,5 +1,3 @@
-import string
-
 from django.core.exceptions import ValidationError
 
 

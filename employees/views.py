@@ -1,6 +1,6 @@
 from django.core.paginator import Paginator
-from django.db.models import Avg, F, Q
-from django.shortcuts import render, get_list_or_404, get_object_or_404, redirect
+from django.db.models import Avg, F
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 
 from django.views.generic import DeleteView, UpdateView, CreateView, DetailView
@@ -48,14 +48,14 @@ class FocusedEmployee(DetailView):
                 )
 
 
-class LeaveAReview(CreateView):  # TW E ZA clasa -A OTGORE
+class LeaveAReview(CreateView):
     model = Review
     form_class = ReviewForms
     success_url = reverse_lazy('employees:current-employees')
     template_name = 'employees/focused-employee.html'
 
     def find_current_employee(self):
-        return get_object_or_404(Employee, pk=self.kwargs['pk'])
+        return get_object_or_404(Employee.objects.get_avg_rating(), pk=self.kwargs['pk'])
 
 
     def get_context_data(self, **kwargs):

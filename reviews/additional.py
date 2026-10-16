@@ -1,6 +1,4 @@
 import random
-from random import choice
-
 
 raiting_messages = {
     1: [
