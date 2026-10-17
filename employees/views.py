@@ -28,8 +28,6 @@ def current_employees(request):
     return render(request, 'employees/employees-in-db.html', context)
 
 
-
-
 class FocusedEmployee(DetailView):
     model = Employee
     template_name = 'employees/focused-employee.html'
@@ -57,7 +55,6 @@ class LeaveAReview(CreateView):
     def find_current_employee(self):
         return get_object_or_404(Employee.objects.get_avg_rating(), pk=self.kwargs['pk'])
 
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['employee'] = self.find_current_employee()
@@ -69,7 +66,13 @@ class LeaveAReview(CreateView):
         return super().form_valid(form)
 
 
+class HireEmployee(CreateView):
+    model = Employee
+    form_class = CreateEmployee
+    success_url = 'employees:focused-employee'
+    template_name = 'employees/focused-employee.html'
 
+    ## context change
 
 def hire_employee(request, pk):
     if not request.method == 'POST':
@@ -133,7 +136,7 @@ def show_skills(request):
         if skill_to_search:
             get_skills_and_employees = get_skills_and_employees.filter(name__icontains=skill_to_search)
     context = {
-        'total_skills':total_skills,
+        'total_skills': total_skills,
         'skills_and_employees': get_skills_and_employees,
         'form': form,
         'skills_in_checkbox': skills_checkbox,

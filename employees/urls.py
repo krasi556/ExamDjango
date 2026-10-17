@@ -12,7 +12,7 @@ urlpatterns = [
         path('', views.FocusedEmployee.as_view(), name='focused-employee'),
         path('edit/', views.EditEmployeeView.as_view(), name='edit'),
         path('delete/', views.DeleteEmployeeView.as_view(), name='delete'),
-        path('hire/', views.hire_employee, name='hire-employee'),
+        path('hire/', views.HireEmployee.as_view(), name='hire-employee'),
         path('edit-review/',views.LeaveAReview.as_view(),name='edit-employee-review')
 
     ])),
