@@ -3,7 +3,7 @@ from django.db.models import Avg, F
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 
-from django.views.generic import DeleteView, UpdateView, CreateView, DetailView
+from django.views.generic import DeleteView, UpdateView, CreateView, DetailView, ListView
 
 from core.views import handle_error404
 from employees.forms import EmployeeBase, DeleteEmployee, EditEmployee, CreateEmployee, SearchForm, SkillCreate
@@ -27,6 +27,23 @@ def current_employees(request):
     }
     return render(request, 'employees/employees-in-db.html', context)
 
+
+class CurrentEmployeeListView(ListView):
+    model = Employee
+    paginate_by = 3
+    template_name = 'employees/employees-in-db.html'
+    context_object_name = 'employees'
+
+    def get_queryset(self):
+        return (
+            Employee.objects
+            .annotate(avg_rating=Avg('reviews__rating'))
+            .order_by(F('avg_rating').desc(nulls_last=True)))
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['employees'] = context['page_obj']
+        return context
 
 class FocusedEmployee(DetailView):
     model = Employee
