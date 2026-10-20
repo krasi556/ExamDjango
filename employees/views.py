@@ -66,21 +66,15 @@ class LeaveAReview(CreateView):
         return super().form_valid(form)
 
 
-class HireEmployee(CreateView):
+class HireEmployee(UpdateView):
     model = Employee
-    form_class = CreateEmployee
-    success_url = 'employees:focused-employee'
     template_name = 'employees/focused-employee.html'
 
-    ## context change
-
-def hire_employee(request, pk):
-    if not request.method == 'POST':
-        return redirect('employees:focused-employee', pk)
-    get_employee = get_object_or_404(Employee, id=pk)
-    get_employee.is_available = False
-    get_employee.save()
-    return redirect('employees:current-employees')
+    def post(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        self.object.is_available = False
+        self.object.save()
+        return redirect('employees:focused-employee', pk=self.object.pk)
 
 
 class CreateEmployeeView(CreateView):
