@@ -10,8 +10,7 @@ from reviews.models import Review
 # Create your views here.
 
 def show_employees_for_review(request):
-    all_employees = Employee.objects.all()
-
+    all_employees = Employee.objects.all().order_by('id')
     form = ReviewForms()
     paginator = Paginator(all_employees, 1)
     page = request.GET.get('page')

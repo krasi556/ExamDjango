@@ -25,7 +25,6 @@ class Employee(models.Model):
 
     is_available = models.BooleanField(default=True)
     current_task = models.CharField(max_length=200, null=True, blank=True)
-
     first_name = models.CharField(max_length=100,
                                   validators=[symbol_validator])
     last_name = models.CharField(max_length=100,
