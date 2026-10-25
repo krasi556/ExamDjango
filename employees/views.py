@@ -14,20 +14,6 @@ from reviews.models import Review
 
 # Create your views here.
 
-# def current_employees(request):
-#     obj_employees = (Employee.objects
-#                      .annotate(avg_rating=Avg('reviews__rating'))
-#                      .order_by(F('avg_rating').desc(nulls_last=True), )
-#                      )
-#     paginator = Paginator(obj_employees, 6)
-#     page_number = request.GET.get('page')
-#     page_obj = paginator.get_page(page_number)
-#     context = {
-#         'employees': page_obj
-#     }
-#     return render(request, 'employees/employees-in-db.html', context)
-
-
 class CurrentEmployeeListView(ListView):
     model = Employee
     paginate_by = 3
