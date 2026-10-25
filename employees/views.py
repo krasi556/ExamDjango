@@ -128,14 +128,15 @@ class DeleteEmployeeView(DeleteView):
 
 
 def show_skills(request):
+
     get_skills_and_employees = (Skill.objects
                                 .prefetch_related('employees'))
-
+    all_skills = get_skills_and_employees
     form = SearchForm(request.GET or None)
     skills_checkbox = EmployeeBase()
     employees_with_skills = Employee.objects.filter(skills__isnull=False).distinct().count()
     total_skills = Skill.objects.count()
-    if request.method == 'GET' and form.is_valid():
+    if form.is_valid():
         skill_to_search = form.cleaned_data['search_field']
         try:
             ids = [int(num) for num in request.GET.getlist('skills')]
@@ -145,6 +146,8 @@ def show_skills(request):
             get_skills_and_employees = get_skills_and_employees.filter(id__in=ids)
         if skill_to_search:
             get_skills_and_employees = get_skills_and_employees.filter(name__icontains=skill_to_search)
+        if not get_skills_and_employees.exists():
+            get_skills_and_employees = all_skills
     context = {
         'total_skills': total_skills,
         'skills_and_employees': get_skills_and_employees,
